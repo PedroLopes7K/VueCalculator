@@ -31,6 +31,7 @@ export default {
       middle: null,
       current: '',
       currentnumber: '',
+      currentOperator: null,
       operator: null,
       symbolOperator: '',
       countOpetators: 0,
@@ -54,13 +55,15 @@ export default {
       if(this.countOpetators >= 2){
   
         this.middle = this.current
-        this.current = `${this.operator(
-        parseFloat(this.middle),
-        parseFloat(this.previous)
+        this.current = `${this.currentOperator(
+        parseFloat(this.previous),
+        parseFloat(this.currentnumber)
       )}`
 
       }
       if (this.operatorClicked) {
+        this.currentOperator = this.operator
+        this.currentnumber = number
         this.current = this.current + this.symbolOperator
         this.operatorClicked = false
       }
@@ -107,10 +110,11 @@ export default {
     equal() {
       this.countOpetators = 0
       console.log(this.previous)
-      console.log(this.current)
+      console.log(this.currentnumber)
       this.current = `${this.operator(
         parseFloat(this.previous),
-        parseFloat(this.current)
+        parseFloat(this.currentnumber)
+        // parseFloat(this.current)
       )}`
       this.previous = null
     }
