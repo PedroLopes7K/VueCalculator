@@ -28,9 +28,12 @@ export default {
   data() {
     return {
       previous: null,
+      middle: null,
       current: '',
+      currentnumber: '',
       operator: null,
       symbolOperator: '',
+      countOpetators: 0,
       operatorClicked: false
     }
   },
@@ -48,10 +51,20 @@ export default {
       this.current = `${parseFloat(this.current) / 100}`
     },
     append(number) {
+      if(this.countOpetators >= 2){
+  
+        this.middle = this.current
+        this.current = `${this.operator(
+        parseFloat(this.middle),
+        parseFloat(this.previous)
+      )}`
+
+      }
       if (this.operatorClicked) {
         this.current = this.current + this.symbolOperator
         this.operatorClicked = false
       }
+
       this.current = `${this.current}${number}`
     },
     dot() {
@@ -62,38 +75,42 @@ export default {
     setPrevious() {
       this.previous = this.current
       this.operatorClicked = true
+      console.log(this.countOpetators)
     },
     divide(symbol) {
       this.symbolOperator = symbol
+      this.countOpetators++
       this.operator = (a, b) => a / b
       this.setPrevious()
-      console.log(this.operator)
 
     },
     times(symbol) {
       this.symbolOperator = symbol
+      this.countOpetators++
       this.operator = (a, b) => a * b
       this.setPrevious()
-      console.log(this.operator)
 
     },
     minus(symbol) {
       this.symbolOperator = symbol
+      this.countOpetators++
       this.operator = (a, b) => a - b
       this.setPrevious()
-      console.log(this.operator)
 
     },
     add(symbol) {
       this.symbolOperator = symbol
+      this.countOpetators++
       this.operator = (a, b) => a + b
       this.setPrevious()
-      console.log(this.operator)
     },
     equal() {
+      this.countOpetators = 0
+      console.log(this.previous)
+      console.log(this.current)
       this.current = `${this.operator(
-        parseFloat(this.current),
-        parseFloat(this.previous)
+        parseFloat(this.previous),
+        parseFloat(this.current)
       )}`
       this.previous = null
     }
