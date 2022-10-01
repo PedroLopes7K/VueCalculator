@@ -35,7 +35,8 @@ export default {
       operator: null,
       symbolOperator: '',
       countOpetators: 0,
-      operatorClicked: false
+      operatorClicked: false,
+     control: false
     }
   },
   methods: {
@@ -52,18 +53,25 @@ export default {
       this.current = `${parseFloat(this.current) / 100}`
     },
     append(number) {
+      if(this.control){
+        this.currentnumber = this.currentnumber + number
+
+      }
       if(this.countOpetators >= 2){
-  
+        console.log(this.currentnumber)
         this.middle = this.current
         this.current = `${this.currentOperator(
         parseFloat(this.previous),
         parseFloat(this.currentnumber)
       )}`
+      this.previous = this.current
+      this.countOpetators = 1
+      this.currentnumber = ''
 
       }
       if (this.operatorClicked) {
+        this.control = true
         this.currentOperator = this.operator
-        this.currentnumber = number
         this.current = this.current + this.symbolOperator
         this.operatorClicked = false
       }
@@ -78,7 +86,6 @@ export default {
     setPrevious() {
       this.previous = this.current
       this.operatorClicked = true
-      console.log(this.countOpetators)
     },
     divide(symbol) {
       this.symbolOperator = symbol
@@ -109,8 +116,6 @@ export default {
     },
     equal() {
       this.countOpetators = 0
-      console.log(this.previous)
-      console.log(this.currentnumber)
       this.current = `${this.operator(
         parseFloat(this.previous),
         parseFloat(this.currentnumber)
