@@ -58,9 +58,11 @@ export default {
     },
     append(number) {
 
+      if(this.countClickOperatorValidate > 1 && this.countClickOperator == this.countClickOperatorValidate){
+        this.currentnumber = `${this.currentnumber}${number}`
+      }
 
       if(this.countOpetators >= 2){
-        console.log(this.currentnumber)
         this.middle = this.current
         this.current = `${this.currentOperator(
         parseFloat(this.previous),
@@ -68,18 +70,17 @@ export default {
       )}`
       this.previous = this.current
       this.countOpetators = 1
-
-
+      this.currentnumber = ''
       }
 
+
       if (this.operatorClicked) {
-        this.control = true
         this.currentOperator = this.operator
         this.currentnumber = `${this.currentnumber}${number}`
 
         if(this.testeControl){
-          if(this.countClickOperatorValidate == this.countClickOperator){
-          this.current = this.current + this.symbolOperator
+        if(this.countClickOperatorValidate == this.countClickOperator){
+        this.current = this.current + this.symbolOperator
         }
          this.operatorClicked = false
          this.testeControl = false
@@ -89,12 +90,13 @@ export default {
          this.current = this.current + this.symbolOperator
          this.countClickOperatorValidate = this.countClickOperator
          this.operatorClicked = false
+
         }
       }
-        this.currentnumber = `${this.currentnumber}${number}`
-
-      this.current = `${this.current}${number}`
+ 
+    this.current = `${this.current}${number}`
     },
+
     dot() {
       if (this.current.indexOf('.') === -1) {
         this.append('.')
@@ -139,7 +141,7 @@ export default {
         parseFloat(this.currentnumber)
       )}`
       this.previous = null
-      
+      this.currentnumber = ''
     }
   }
 }
