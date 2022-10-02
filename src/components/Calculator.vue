@@ -35,13 +35,17 @@ export default {
       operator: null,
       symbolOperator: '',
       countOpetators: 0,
+      countClickOperator: 0,
+      countClickOperatorValidate: 1,
       operatorClicked: false,
+      testeControl: true,
      control: false
     }
   },
   methods: {
     clear() {
       this.current = ''
+      this.countOpetators = 0
     },
     sign() {
       this.current =
@@ -53,10 +57,8 @@ export default {
       this.current = `${parseFloat(this.current) / 100}`
     },
     append(number) {
-      if(this.control){
-        this.currentnumber = this.currentnumber + number
 
-      }
+
       if(this.countOpetators >= 2){
         console.log(this.currentnumber)
         this.middle = this.current
@@ -66,15 +68,30 @@ export default {
       )}`
       this.previous = this.current
       this.countOpetators = 1
-      this.currentnumber = ''
+
 
       }
+
       if (this.operatorClicked) {
         this.control = true
         this.currentOperator = this.operator
-        this.current = this.current + this.symbolOperator
-        this.operatorClicked = false
+        this.currentnumber = `${this.currentnumber}${number}`
+
+        if(this.testeControl){
+          if(this.countClickOperatorValidate == this.countClickOperator){
+          this.current = this.current + this.symbolOperator
+        }
+         this.operatorClicked = false
+         this.testeControl = false
+        }
+
+        if(this.countClickOperatorValidate < this.countClickOperator){
+         this.current = this.current + this.symbolOperator
+         this.countClickOperatorValidate = this.countClickOperator
+         this.operatorClicked = false
+        }
       }
+        this.currentnumber = `${this.currentnumber}${number}`
 
       this.current = `${this.current}${number}`
     },
@@ -86,6 +103,7 @@ export default {
     setPrevious() {
       this.previous = this.current
       this.operatorClicked = true
+      this.countClickOperator = this.countClickOperator + 1
     },
     divide(symbol) {
       this.symbolOperator = symbol
@@ -119,9 +137,9 @@ export default {
       this.current = `${this.operator(
         parseFloat(this.previous),
         parseFloat(this.currentnumber)
-        // parseFloat(this.current)
       )}`
       this.previous = null
+      
     }
   }
 }
