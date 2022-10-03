@@ -44,8 +44,20 @@ export default {
   },
   methods: {
     clear() {
-      this.current = ''
-      this.countOpetators = 0
+      this.previous= null,
+      this.middle = null,
+      this.current = '',
+      this.currentnumber =  '',
+      this.currentOperator = null,
+      this.operator = null,
+      this.symbolOperator = '',
+      this.countOpetators = 0,
+      this.countClickOperator = 0,
+      this.countClickOperatorValidate = 1,
+      this.operatorClicked = false,
+      this.testeControl = true,
+      this.control = false
+ 
     },
     sign() {
       this.current =
@@ -57,13 +69,14 @@ export default {
       this.current = `${parseFloat(this.current) / 100}`
     },
     append(number) {
-
+      // APENAS FALTANDO RESOLVER PROBLEMA DO DOT
       if(this.countClickOperatorValidate > 1 && this.countClickOperator == this.countClickOperatorValidate){
         this.currentnumber = `${this.currentnumber}${number}`
       }
-
+    
       if(this.countOpetators >= 2){
         this.middle = this.current
+        console.log(this.currentnumber)
         this.current = `${this.currentOperator(
         parseFloat(this.previous),
         parseFloat(this.currentnumber)
@@ -77,12 +90,11 @@ export default {
       if (this.operatorClicked) {
         this.currentOperator = this.operator
         this.currentnumber = `${this.currentnumber}${number}`
-
+  
         if(this.testeControl){
-        if(this.countClickOperatorValidate == this.countClickOperator){
+        
         this.current = this.current + this.symbolOperator
-        }
-         this.operatorClicked = false
+        
          this.testeControl = false
         }
 
@@ -93,7 +105,7 @@ export default {
 
         }
       }
- 
+
     this.current = `${this.current}${number}`
     },
 
@@ -135,13 +147,19 @@ export default {
       this.setPrevious()
     },
     equal() {
+      console.log(this.previous)
+      console.log(this.currentnumber)
       this.countOpetators = 0
       this.current = `${this.operator(
         parseFloat(this.previous),
         parseFloat(this.currentnumber)
       )}`
-      this.previous = null
+      this.previous = ''
       this.currentnumber = ''
+      this.countClickOperator = 0
+      this.countClickOperatorValidate = 1
+      this.operatorClicked  = false
+      this.testeControl  = true
     }
   }
 }
