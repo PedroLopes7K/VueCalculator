@@ -110,7 +110,7 @@ export default {
     },
 
     dot() {
-      if (this.current.indexOf('.') === -1) {
+      if (this.currentnumber.indexOf('.') === -1) {
         this.append('.')
       }
     },
